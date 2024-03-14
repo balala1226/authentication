@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <form action="" method="POST" class="signUpForm">
+      <label for="firstName">First Name: </label>
+      <input name="firstName" placeholder="First Name" type="text" value="<%=locals.firstName%>"/>
+      <label for="lastName">Last Name: </label>
+      <input name="lastName" placeholder="Last Name" type="text" value="<%=locals.lastName%>"/>
+      <label for="email">Email: </label>
+      <input name="email" placeholder="email@sample.com" type="email" value="<%=locals.email%>"/>
+      <label for="password">Password: </label>
+      <input name="password" type="password"/>
+      <label for="confirmPassword">Confirm Password: </label>
+      <input name="confirmPassword" type="password"/>
+      <button>Sign Up</button>
+    </form>
+    <%if(locals.errors != null){%>
+      <div class="errorContainer">
+        <h2>Sign up error</h2>
+        <%locals.errors.forEach(error => {%>
+          <p><%=error.msg%></p>
+        <%})%>
+      </div>
+    <%}%>
+  </body>
+</html>

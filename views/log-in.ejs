@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <form action="/log-in" method="POST" class="logInForm">
+      <label for="username">Email: </label>
+      <input name="username" placeholder="username" type="text"/>
+      <label for="password">Password: </label>
+      <input name="password" type="password"/>
+      <button>Log In</button>
+    </form>
+    <%if(locals.errors != null){%>
+      <div class="errorContainer">
+        <h2>Log in error</h2>
+        <%locals.errors.forEach(error => {%>
+          <p><%=error.msg%></p>
+        <%})%>
+      </div>
+    <%}%>
+  </body>
+</html>
