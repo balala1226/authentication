@@ -1,10 +1,17 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  width: 100%;
 }
 
 a {
   text-decoration: none;
   color: black;
+}
+a:hover {
+  color: rgb(0, 191, 255);
 }
 
 p {
@@ -16,4 +23,153 @@ p {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 15vh;
+  border-bottom: 2px solid black;
+}
+
+.headerContent{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 2%;
+}
+
+.haderAppName{
+  display: flex;
+  align-items: center;
+  gap: 10%;
+  min-width: 40%;
+}
+
+.headerItem{
+  display: flex;
+  align-items: center;
+  justify-content:flex-end;
+  gap: 10%;
+  min-width: 40%;
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.logInContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.logInForm{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.logInButton{
+  width: 50%;
+}
+.logInButton:hover{
+  cursor: pointer;
+}
+
+.signUpForm{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 10px;
+}
+
+.signUpButton{
+  width: 50%;
+}
+.signUpButton:hover{
+  cursor: pointer;
+}
+
+.messagesContainer{
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  gap: 10px;
+}
+
+.newMessageContainer{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  width: 100%;
+  padding: 2%;
+}
+
+.newMessageButton{
+  width: 30%;
+}
+
+.messageListContainer{
+  display: flex;
+  flex-direction: column;
+}
+
+.messageContainer{
+  display: flex;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  width: 100%;
+  padding: 2%;
+}
+
+.messageContent{
+  display: flex;
+  flex-direction: column;
+  gap: 10%;
+}
+
+.messageTextContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 2px;
+}
+
+.messageTitle{
+  font-weight: bold;
+}
+
+.messagePremiumContainer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.messageAuthor{
+  font-style: italic;
+}
+
+.deleteContainer{
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.deleteMessageButton{
+  width: 100%;
+  background-color: transparent;
+  border-radius: 5px;
 }

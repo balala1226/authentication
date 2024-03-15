@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var userRouter = require('./routes/user');
 
 const session = require("express-session");
 const passport = require("passport");
@@ -34,22 +33,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 const User = require("./models/user");
 
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
-// app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
 passport.use(
   new LocalStrategy(async (username, password, done) => {
-    console.log("user");
     try {
       const user = await User.findOne({ email: username });
       if (!user) {
-        console.log("wrong email");
         return done(null, false, { errorMessage: "Incorrect email" });
       };
       const match = await bcrypt.compare(password, user.password);
       if (!match) {
-        console.log("wrong password");
         return done(null, false, { errorMessage: "Incorrect password" })
       };
       return done(null, user);
@@ -60,12 +55,10 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  console.log("serializeUser");
   done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
-  console.log("deserializeUser");
   try {
       const user = await User.findById(id);
       done(null, user);
@@ -80,7 +73,6 @@ app.use((req, res, next) => {
 });
 
 app.use('/', indexRouter);
-app.use('/', userRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

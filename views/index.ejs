@@ -5,27 +5,48 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <% if (user) {%>
-      <h1>WELCOME BACK <%= user.firstName %></h1>
-      <a href="/log-out">LOG OUT</a>
-    <% } else { %>
-      <h1>Please log in</h1>
-      <form action="/log-in" method="POST">
-        <label for="username">Email: </label>
-        <input name="username" placeholder="email@sample.com" type="text"/>
-        <label for="password">Password: </label>
-        <input name="password" type="password"/>
-        <button>Log In</button>
-      </form>
-      <%if(locals.errors != null){%>
-        <div class="errorContainer">
-          <h2>Log in error</h2>
-          <%locals.errors.forEach(error => {%>
-            <p><%=error.msg%></p>
+    <%- include('header') -%>
+    <div class="content">
+      <div class="messagesContainer">
+        <% if (user) {%>
+        <div class="newMessageContainer">
+          <p>Post New Message</p>
+          <form action="/new-message" method="POST" class="logInForm">
+            <label for="newMessageTitle">Title: </label>
+            <input name="newMessageTitle" placeholder="Title" type="text"/>
+            <label for="newMessageDescription">Description: </label>
+            <textarea  name="newMessageDescription" rows="4" cols="50"></textarea>
+            <button class="newMessageButton">Post</button>
+          </form>
+        </div>
+        <%}%>
+        <div class="messageListContainer">
+          <%locals.messages.forEach(message => { %>
+            <div class="messageContainer">
+              <div class="messageContent">
+                <div class="messageTextContainer">
+                  <p class="messageTitle"><%=message.title%></p>
+                  <p class="messageDescription"><%=message.description%></p>
+                </div>
+                <% if (user && user.isPremiumMember) {%>
+                  <div class="messagePremiumContainer">
+                    <p class="messageAuthor"><%=message.user.fullName%></p>
+                    <p class="messageDate"><%=message.date%></p>
+                  </div>
+                <%}%>
+              </div>
+              <% if (user && user.isAdmin) {%>
+                <div class="deleteContainer">
+                  <form action="/message_delete_post" method="POST" class="logInForm">
+                    <input name="deleteId" type="hidden" value="<%=message.id%>"/>
+                    <button class="deleteMessageButton">Delete</button>
+                  </form>
+                </div>
+              <%}%>
+            </div>
           <%})%>
         </div>
-      <%}%>
-      <h1><a href="/sign-up">Sign Up Now</a></h1>
-    <%}%>
+      </div>
+    </div>
   </body>
 </html>

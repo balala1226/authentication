@@ -6,8 +6,12 @@ const asyncHandler = require("express-async-handler");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
 
+//sign up
 exports.sign_up_get = asyncHandler(async (req, res, next) => {
-    res.render('sign-up', { title: 'Sign Up' });
+    res.render('sign-up', { 
+      title: 'Sign Up',
+      user: res.locals.currentUser
+    });
 });
 
 exports.sign_up_post = [
@@ -39,8 +43,6 @@ exports.sign_up_post = [
   })
   .custom(async value => {
     const user = await User.find({email: value}).exec();
-    console.log(user);
-    console.log(user.length);
     if (user && user.length > 0) {
       throw new Error('E-mail already in use');
     }
@@ -79,7 +81,6 @@ exports.sign_up_post = [
         email: req.body.email,
         errors: errors.array(),
       });
-      console.log("error 1");
       return;
     } else {
       // Data from form is valid.
@@ -94,9 +95,9 @@ exports.sign_up_post = [
             firstName:req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
-            errors: errorArray
+            errors: errorArray,
+            user: res.locals.currentUser
           });
-          console.log("error 2");
           return;
         }
         // Create User object with escaped and trimmed data
@@ -106,7 +107,8 @@ exports.sign_up_post = [
           email: req.body.email,
           password: hashedPassword,
           isPremiumMember: false,
-          isAdmin: false
+          isAdmin: false,
+          user: res.locals.currentUser
         });
         // Save user.
         await user.save();
@@ -117,9 +119,12 @@ exports.sign_up_post = [
   }),
 ];
 
-
+//log in
 exports.log_in_get = asyncHandler(async (req, res, next) => {
-    res.render('log-in', { title: 'Log In' });
+    res.render('log-in', { 
+      title: 'Log In',
+      user: res.locals.currentUser
+    });
 });
 
 exports.log_in_post = passport.authenticate("local", {
@@ -127,7 +132,7 @@ exports.log_in_post = passport.authenticate("local", {
     failureRedirect: "/log-in"
 });
 
-
+//log out
 exports.log_out_get = asyncHandler(async (req, res, next) => {
     req.logout((err) => {
       if (err) {
@@ -135,4 +140,12 @@ exports.log_out_get = asyncHandler(async (req, res, next) => {
       }
       res.redirect("/");
     });
+});
+
+//membership
+exports.membership_update_get= asyncHandler(async (req, res, next) => {
+  res.render('membership', { 
+    title: 'Membership Update',
+    user: res.locals.currentUser
+  });
 });
