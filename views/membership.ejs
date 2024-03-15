@@ -7,7 +7,46 @@
   <body>
     <%- include('header') -%>
     <div class="content">
-      <h1>Membership Update</h1>
+      <h1>Membership Status</h1>
+      <% if (user && !user.isPremiumMember) {%>
+        <div class="membershipStatusContainer">
+          <p class="textTitle">Regular Member</p>
+          <p>As a member you can post message but not see author and post date.</p>
+        </div>
+        <form action="/premium_membership_update" method="POST" class="memberForm">
+          <label for="premiumMemberInput">Be a premium member enter secret code:</label>
+          <input name="premiumMemberInput" type="text"/>
+          <button class="memberButton">Submit</button>
+        </form>
+      <%}%>
+
+      <% if (user && user.isPremiumMember) {%>
+        <div class="membershipStatusContainer">
+          <p class="textTitle">Premium Member</p>
+          <p>As a premium member you can post messages and see message author's and post date</p>  
+        </div>
+        <% if (user && !user.isAdmin) {%>
+          <form action="/admin_membership_update" method="POST" class="memberForm">
+            <label for="adminInput">Be an admin enter secret code:</label>
+            <input name="adminInput" type="text"/>
+            <button class="memberButton">Submit</button>
+          </form>
+        <%}%>
+      <%}%>
+
+      <% if (user && user.isAdmin) {%>
+        <div class="membershipStatusContainer">
+          <p class="textTitle">Admin</p>
+          <p>As an admin you can delete posts.</p>
+        </div>
+      <%}%>
+      <%if(locals.errors != null){%>
+        <div class="errorContainer">
+          <%locals.errors.forEach(error => {%>
+            <p><%=error.msg%></p>
+          <%})%>
+        </div>
+      <%}%>
     </div>
   </body>
 </html>

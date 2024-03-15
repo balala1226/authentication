@@ -22,7 +22,8 @@ p {
 .errorContainer{
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
+  color: red;
 }
 
 header{
@@ -113,24 +114,25 @@ header{
   flex-direction: column;
   border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 5px;
-  width: 100%;
+  width: 96%;
   padding: 2%;
 }
 
 .newMessageButton{
-  width: 30%;
+  width: 20%;
 }
 
 .messageListContainer{
   display: flex;
   flex-direction: column;
+  width: 100%;
+  gap: 5px;
 }
 
 .messageContainer{
   display: flex;
   border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 5px;
-  width: 100%;
   padding: 2%;
 }
 
@@ -138,6 +140,7 @@ header{
   display: flex;
   flex-direction: column;
   gap: 10%;
+  width: 100%;
 }
 
 .messageTextContainer{
@@ -172,4 +175,27 @@ header{
   width: 100%;
   background-color: transparent;
   border-radius: 5px;
+}
+.deleteMessageButton:hover{
+  cursor: pointer;
+}
+
+.membershipStatusContainer{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
+}
+
+.textTitle{
+  font-weight: bold;
+}
+
+.memberForm{
+  display: flex;
+  flex-direction: column;
+  gap:5px;
+}
+
+.memberButton{
+  width: 30%;
 }

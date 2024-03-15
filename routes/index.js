@@ -22,5 +22,13 @@ router.get("/log_out", userController.log_out_get);
 router.get("/membership", userController.membership_update_get);
 
 //newMessage
-router.post("/new-message", messageController.new_message_post);
+router.post("/new_message", messageController.new_message_post);
+
+//membershipUpdate
+router.post("/premium_membership_update", userController.premium_membership_update_post);
+router.post("/admin_membership_update", userController.admin_membership_update_post);
+
+//delete message
+router.post("/message_delete", messageController.message_delete_post);
+
 module.exports = router;

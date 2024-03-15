@@ -6,6 +6,8 @@ const asyncHandler = require("express-async-handler");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
 
+require("dotenv").config();
+
 //sign up
 exports.sign_up_get = asyncHandler(async (req, res, next) => {
     res.render('sign_up', { 
@@ -107,8 +109,7 @@ exports.sign_up_post = [
           email: req.body.email,
           password: hashedPassword,
           isPremiumMember: false,
-          isAdmin: false,
-          user: res.locals.currentUser
+          isAdmin: false
         });
         // Save user.
         await user.save();
@@ -145,7 +146,118 @@ exports.log_out_get = asyncHandler(async (req, res, next) => {
 //membership
 exports.membership_update_get= asyncHandler(async (req, res, next) => {
   res.render('membership', { 
-    title: 'Membership Update',
+    title: 'Membership Status',
     user: res.locals.currentUser
   });
 });
+
+//premium membership
+exports.premium_membership_update_post = [
+  // Validate and sanitize fields.
+  body("premiumMemberInput")
+  .trim()
+  .isLength({
+      min: 1,
+      errorMessage: 'No Code.'
+      })
+  .escape()
+  .withMessage("Wrong Code")
+  .custom(async value => {
+    if (value != process.env.PREMIUM_CODE) {
+      throw new Error('Invalid Code');
+    }
+  }),
+
+  // Process request after validation and sanitization.
+  asyncHandler(async (req, res, next) => {
+      // Extract the validation errors from a request.
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+      // There are errors. Render form again with sanitized values/errors messages.
+        res.render('membership', { 
+          title: 'Membership Status',
+          user: res.locals.currentUser,
+          errors: errors.array(),
+        });
+        return;
+      } else {
+        // Data from form is valid.
+
+        const user = new User({
+          firstName: res.locals.currentUser.firstName,
+          lastName: res.locals.currentUser.lastName,
+          email: res.locals.currentUser.email,
+          password: res.locals.currentUser.password,
+          isPremiumMember: true,
+          isAdmin: false,
+          _id: res.locals.currentUser.id
+        });
+
+        res.locals.currentUser.isPremiumMember = true;
+        // Save user.
+        await User.findByIdAndUpdate(res.locals.currentUser.id, user, {});
+
+        res.render('membership', { 
+          title: 'Membership Status',
+          user: res.locals.currentUser
+        });
+      }
+  }),
+];
+
+
+//admin membership
+exports.admin_membership_update_post = [
+  // Validate and sanitize fields.
+  body("adminInput")
+  .trim()
+  .isLength({
+      min: 1,
+      errorMessage: 'No Code.'
+      })
+  .escape()
+  .withMessage("Wrong Code")
+  .custom(async value => {
+    if (value != process.env.ADMIN_CODE) {
+      throw new Error('Invalid Code');
+    }
+  }),
+
+  // Process request after validation and sanitization.
+  asyncHandler(async (req, res, next) => {
+      // Extract the validation errors from a request.
+      const errors = validationResult(req);
+      
+      if (!errors.isEmpty()) {
+      // There are errors. Render form again with sanitized values/errors messages.
+        res.render('membership', { 
+          title: 'Membership Status',
+          user: res.locals.currentUser,
+          errors: errors.array(),
+        });
+        return;
+      } else {
+        // Data from form is valid.
+
+        const user = new User({
+          firstName: res.locals.currentUser.firstName,
+          lastName: res.locals.currentUser.lastName,
+          email: res.locals.currentUser.email,
+          password: res.locals.currentUser.password,
+          isPremiumMember: true,
+          isAdmin: true,
+          _id: res.locals.currentUser.id
+        });
+
+        res.locals.currentUser.isAdmin = true;
+        // Save user.
+        await User.findByIdAndUpdate(res.locals.currentUser.id, user, {});
+
+        res.render('membership', { 
+          title: 'Membership Status',
+          user: res.locals.currentUser
+        });
+      }
+  }),
+];

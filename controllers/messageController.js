@@ -23,7 +23,7 @@ exports.index = asyncHandler(async (req, res, next) => {
 });
 
 exports.new_message_get = asyncHandler(async (req, res, next) => {
-    res.render('new-message', {
+    res.render('new_message', {
         title: 'New Message',
         user: res.locals.currentUser
     });

@@ -11,7 +11,7 @@
         <% if (user) {%>
         <div class="newMessageContainer">
           <p>Post New Message</p>
-          <form action="/new-message" method="POST" class="logInForm">
+          <form action="/new_message" method="POST" class="logInForm">
             <label for="newMessageTitle">Title: </label>
             <input name="newMessageTitle" placeholder="Title" type="text"/>
             <label for="newMessageDescription">Description: </label>
@@ -37,7 +37,7 @@
               </div>
               <% if (user && user.isAdmin) {%>
                 <div class="deleteContainer">
-                  <form action="/message_delete_post" method="POST" class="logInForm">
+                  <form action="/message_delete" method="POST" class="logInForm">
                     <input name="deleteId" type="hidden" value="<%=message.id%>"/>
                     <button class="deleteMessageButton">Delete</button>
                   </form>
