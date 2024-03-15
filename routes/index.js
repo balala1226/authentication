@@ -8,15 +8,15 @@ const messageController = require("../controllers/messageController");
 router.get('/', messageController.index);
 
 //sign up
-router.get("/sign-up", userController.sign_up_get);
-router.post("/sign-up", userController.sign_up_post);
+router.get("/sign_up", userController.sign_up_get);
+router.post("/sign_up", userController.sign_up_post);
 
 //log in
-router.get("/log-in", userController.log_in_get);
-router.post("/log-in", userController.log_in_post);
+router.get("/log_in", userController.log_in_get);
+router.post("/log_in", userController.log_in_post);
 
 //log out
-router.get("/log-out", userController.log_out_get);
+router.get("/log_out", userController.log_out_get);
 
 //membership
 router.get("/membership", userController.membership_update_get);

@@ -8,7 +8,7 @@ const bcrypt = require("bcryptjs");
 
 //sign up
 exports.sign_up_get = asyncHandler(async (req, res, next) => {
-    res.render('sign-up', { 
+    res.render('sign_up', { 
       title: 'Sign Up',
       user: res.locals.currentUser
     });
@@ -74,7 +74,7 @@ exports.sign_up_post = [
 
     if (!errors.isEmpty()) {
       // There are errors. Render form again with sanitized values/errors messages.
-      res.render("sign-up", {
+      res.render("sign_up", {
         title: "Sign Up",
         firstName:req.body.firstName,
         lastName: req.body.lastName,
@@ -90,7 +90,7 @@ exports.sign_up_post = [
           var errorArray = [];
           errorArray.push(newError);
 
-          res.render("sign-up", {
+          res.render("sign_up", {
             title: "Sign Up",
             firstName:req.body.firstName,
             lastName: req.body.lastName,
@@ -121,7 +121,7 @@ exports.sign_up_post = [
 
 //log in
 exports.log_in_get = asyncHandler(async (req, res, next) => {
-    res.render('log-in', { 
+    res.render('log_in', { 
       title: 'Log In',
       user: res.locals.currentUser
     });
@@ -129,7 +129,7 @@ exports.log_in_get = asyncHandler(async (req, res, next) => {
 
 exports.log_in_post = passport.authenticate("local", {
     successRedirect: "/",
-    failureRedirect: "/log-in"
+    failureRedirect: "/log_in"
 });
 
 //log out
